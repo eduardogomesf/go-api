@@ -31,6 +31,7 @@ func main() {
 
 	// middlewares
 	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
 
 	// handlers
 	productDB := database.NewProductDB(db)
