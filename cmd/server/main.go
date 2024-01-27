@@ -7,6 +7,7 @@ import (
 	"github.com/eduardogomesf/go-api/internal/entity"
 	"github.com/eduardogomesf/go-api/internal/infra/database"
 	"github.com/eduardogomesf/go-api/internal/infra/webserver/handlers"
+	"github.com/go-chi/chi"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -27,6 +28,7 @@ func main() {
 	productDB := database.NewProductDB(db)
 	productHandler := handlers.NewProductHandler(productDB)
 
-	http.HandleFunc("/products", productHandler.CreateProduct)
-	http.ListenAndServe(":8080", nil)
+	r := chi.NewRouter()
+	r.Post("/products", productHandler.CreateProduct)
+	http.ListenAndServe(":8080", r)
 }
