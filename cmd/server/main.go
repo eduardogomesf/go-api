@@ -8,6 +8,7 @@ import (
 	"github.com/eduardogomesf/go-api/internal/infra/database"
 	"github.com/eduardogomesf/go-api/internal/infra/webserver/handlers"
 	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -29,6 +30,7 @@ func main() {
 	productHandler := handlers.NewProductHandler(productDB)
 
 	r := chi.NewRouter()
+	r.Use(middleware.Logger)
 	r.Post("/products", productHandler.CreateProduct)
 	r.Get("/products/{id}", productHandler.GetProduct)
 	r.Put("/products/{id}", productHandler.UpdateProduct)
